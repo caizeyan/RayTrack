@@ -4,23 +4,34 @@
 
 #include <iostream>
 
-bool hit_sphere(const point3& center, const double radiu, const ray& ray)
+double hit_sphere(const point3& center, const double radiu, const ray& ray)
 {
     auto ac = ray.orign() - center;
     auto a = dot(ray.direction(), ray.direction());
     auto b = 2 * dot(ray.direction(), ac);
     auto c = dot(ac, ac)-radiu*radiu; 
-    return (b * b - 4 * a * c) >= 0;
+    auto result = (b * b - 4 * a * c);
+    if (result < 0)
+    {
+        return -1;
+    }
+    else {
+        auto t = (-b - sqrt(result)) / (2 * a);
+        return t;
+    }
 }
 
 color ray_color(const ray& r) {
-    if (hit_sphere(point3(0,0,-1),0.5,r))
+    auto t = hit_sphere(point3(0, 0, -1), 0.5, r);
+    if (t > 0)
     {
-        return color(1, 0, 0);
+        auto p = r.orign() + t * r.direction();
+        auto normal = unit_vector(p - point3(0, 0, -1));
+        return 0.5 * color(normal.x() + 1, normal.y() + 1, normal.z() + 1);
     }
     //因为有个 unit 水平方向上t先增大再减小，竖直方向上会增大
     vec3 unit_direction = unit_vector(r.direction());
-    auto t = 0.5 * (unit_direction.y() + 1);
+    t = 0.5 * (unit_direction.y() + 1);
     //a stand lerp (white to blue)
     return (1 - t) * color(1, 1, 1) + t * color(0.5, 0.7, 1);
 }
