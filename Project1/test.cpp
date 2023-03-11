@@ -6,18 +6,20 @@
 
 double hit_sphere(const point3& center, const double radiu, const ray& ray)
 {
-    auto ac = ray.orign() - center;
-    auto a = dot(ray.direction(), ray.direction());
-    auto b = 2 * dot(ray.direction(), ac);
-    auto c = dot(ac, ac)-radiu*radiu; 
-    auto result = (b * b - 4 * a * c);
-    if (result < 0)
+    auto oc = ray.orign() - center;
+    auto a = ray.direction().length_squared();
+    //2*half_b = b  用来约分  上下同时除以2 (-2*half + sqrt(4*half*half - 4ac)) / 2a =( -half+sqrt(half*half-ac)) / a
+    auto half_b = dot(ray.direction(), oc);
+    auto c = oc.length_squared() -radiu*radiu; 
+    auto discriminant = (half_b * half_b -  a * c);
+    if (discriminant < 0)
     {
         return -1;
     }
     else {
-        auto t = (-b - sqrt(result)) / (2 * a);
-        return t;
+        //分子分母同时除以2 
+        auto result = (-half_b - sqrt(discriminant)) / ( a);
+        return result;
     }
 }
 
