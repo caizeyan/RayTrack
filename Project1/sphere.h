@@ -41,9 +41,7 @@ bool sphere::hit(const ray& ray, double t_min, double t_max, hit_record& rec) co
 	}
 	rec.t = t;
 	rec.pos = ray.at(t);
-	//P-C的距离一定 = radius
-	vec3 out_normal = (rec.pos - center) / radius;
-	rec.set_face_normal(ray, out_normal);
+	rec.normal = (rec.pos - center)/radius;		//P-C的距离一定 = radius
 
 	return true;
 }
