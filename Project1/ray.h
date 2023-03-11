@@ -13,7 +13,7 @@ public:
 	ray(const point3& orign, const vec3& dir) :orig(orign), dir(dir) {};
 	point3 orign() const { return orig; }
 	vec3 direction() const { return dir; }
-	point3 at(double t) {
+	point3 at(double t)  const {
 		return point3(orig + dir * t);
 	}
 };
