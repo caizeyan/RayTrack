@@ -1,1 +1,2 @@
 E:\Study\Project1\x64\Debug\Project1.exe
+E:\RayTrack\Project1\x64\Debug\Project1.exe

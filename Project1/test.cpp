@@ -4,7 +4,20 @@
 
 #include <iostream>
 
+bool hit_sphere(const point3& center, const double radiu, const ray& ray)
+{
+    auto ac = ray.orign() - center;
+    auto a = dot(ray.direction(), ray.direction());
+    auto b = 2 * dot(ray.direction(), ac);
+    auto c = dot(ac, ac)-radiu*radiu; 
+    return (b * b - 4 * a * c) >= 0;
+}
+
 color ray_color(const ray& r) {
+    if (hit_sphere(point3(0,0,-1),0.5,r))
+    {
+        return color(1, 0, 0);
+    }
     //因为有个 unit 水平方向上t先增大再减小，竖直方向上会增大
     vec3 unit_direction = unit_vector(r.direction());
     auto t = 0.5 * (unit_direction.y() + 1);
