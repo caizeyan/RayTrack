@@ -10,6 +10,7 @@ using std::make_shared;
 
 class hittable_list :public hittable {
 public:
+	//共享指针，会自动统计引用次数，当引用次数为0时会自动释放资源 可以提高性能
 	std::vector<shared_ptr<hittable>> objects;
 public:
 	hittable_list() {};
