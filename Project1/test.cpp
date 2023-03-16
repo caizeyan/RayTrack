@@ -36,7 +36,7 @@ int main() {
     const int image_width = 400;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     const int samples_per_pixel = 100;
-    const int max_depth = 50;
+    const int max_depth = 10;
     //World
     hittable_list world;
     world.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
