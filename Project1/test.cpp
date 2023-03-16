@@ -1,5 +1,7 @@
 #include "rtweekend.h"
-
+//Headers
+#include "ray.h"
+#include "vec3.h"
 #include "color.h"
 #include "hittable_list.h"
 #include "sphere.h"
@@ -7,11 +9,18 @@
 
 #include <iostream>
 
-color ray_color(const ray& r,const hittable& world) {
+color ray_color(const ray& r,const hittable& world,int depth) {
+    if (depth <= 0)
+    {
+        return color(0, 0, 0);
+    }
     hit_record record;
+ 
     if (world.hit(r,0,infinity,record) )
     {
-        return 0.5 * color(record.normal + vec3(1, 1, 1));
+        point3 target = record.pos + record.normal + random_in_unit_sphere();
+        return 0.5 * ray_color(ray(record.pos, target - record.pos), world,depth-1);
+   
     }
     //因为有个 unit 水平方向上t先增大再减小，竖直方向上会增大
     vec3 unit_direction = unit_vector(r.direction());
@@ -27,7 +36,7 @@ int main() {
     const int image_width = 400;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     const int samples_per_pixel = 100;
-
+    const int max_depth = 50;
     //World
     hittable_list world;
     world.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
@@ -50,7 +59,7 @@ int main() {
                 auto u = (i + random_double()) / (image_width - 1);
                 auto v = (j + random_double()) / (image_height - 1);
                 ray ray= cam.get_ray(u, v);
-                pixel_color += ray_color(ray,world);
+                pixel_color += ray_color(ray,world,max_depth);
             }
             write_color(std::cout, pixel_color,samples_per_pixel);
         }

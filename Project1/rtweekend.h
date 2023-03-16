@@ -1,6 +1,6 @@
 #pragma once
 #ifndef RTWEEKEND_H
-#define RTWEEKEN_H
+#define RTWEEKEND_H
 //常量和工具方法
 
 #include <cmath>
@@ -8,9 +8,6 @@
 #include <memory>
 #include <cstdlib>
 
-//Headers
-#include "ray.h"
-#include "vec3.h"
 
 //Using
 using std::shared_ptr;
@@ -40,6 +37,8 @@ inline double clamp(double x, double min, double max) {
 	if (x > max) return max;
 	return x;
 }
+
+
 
 #endif // !RTWEEKEND_H
 
