@@ -117,5 +117,9 @@ inline vec3 random_in_unit_sphere() {
 		return p;
 	}
 }
+//随机获取一个单位点
+inline vec3 random_unit_vector() {
+	return unit_vector(random_in_unit_sphere());
+}
 
 #endif // !VEC3_H

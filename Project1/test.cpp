@@ -16,9 +16,10 @@ color ray_color(const ray& r,const hittable& world,int depth) {
     }
     hit_record record;
  
-    if (world.hit(r,0,infinity,record) )
+    //两个相同的数相减不一定完全=0  有可能为0.0000001 
+    if (world.hit(r,0.0001,infinity,record) )
     {
-        point3 target = record.pos + record.normal + random_in_unit_sphere();
+        point3 target = record.pos + record.normal + random_unit_vector();
         return 0.5 * ray_color(ray(record.pos, target - record.pos), world,depth-1);
    
     }
