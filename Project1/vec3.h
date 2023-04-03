@@ -122,4 +122,16 @@ inline vec3 random_unit_vector() {
 	return unit_vector(random_in_unit_sphere());
 }
 
+//在半球上随机取一个点
+inline vec3 random_in_hemisphere(const vec3& noraml) {
+	vec3 in_unit_sphere = random_in_unit_sphere();
+	if (dot(noraml,in_unit_sphere) >= 0)
+	{
+		return in_unit_sphere;
+	}
+	else {
+		return -in_unit_sphere;
+	}
+}
+
 #endif // !VEC3_H

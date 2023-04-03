@@ -19,7 +19,13 @@ color ray_color(const ray& r,const hittable& world,int depth) {
     //两个相同的数相减不一定完全=0  有可能为0.0000001 
     if (world.hit(r,0.0001,infinity,record) )
     {
-        point3 target = record.pos + record.normal + random_unit_vector();
+        //从法线+球内取一个点  最黑 10.ppm
+        //point3 target = record.pos +record.normal +random_in_unit_sphere ;
+        
+        //法线+球上取一个点 最轻 11.ppm
+        // point3 target = record.pos +record.normal +random_unit_vector ;
+        //从半球内取一个点
+        point3 target = record.pos + random_in_hemisphere(record.normal);
         return 0.5 * ray_color(ray(record.pos, target - record.pos), world,depth-1);
    
     }
