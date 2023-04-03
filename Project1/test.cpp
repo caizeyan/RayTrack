@@ -23,10 +23,10 @@ color ray_color(const ray& r,const hittable& world,int depth) {
         //point3 target = record.pos +record.normal +random_in_unit_sphere ;
         
         //法线+球上取一个点 最轻 11.ppm
-        // point3 target = record.pos +record.normal +random_unit_vector ;
-        //从半球内取一个点
-        point3 target = record.pos + random_in_hemisphere(record.normal);
-        return 0.5 * ray_color(ray(record.pos, target - record.pos), world,depth-1);
+         point3 target = record.pos +record.normal +random_unit_vector ;
+        //为远离命中点的所有角度提供统一的散射方向，而不依赖于与法线的角度。
+        //point3 target = record.pos + random_in_hemisphere(record.normal);
+        //return 0.5 * ray_color(ray(record.pos, target - record.pos), world,depth-1);
    
     }
     //因为有个 unit 水平方向上t先增大再减小，竖直方向上会增大
